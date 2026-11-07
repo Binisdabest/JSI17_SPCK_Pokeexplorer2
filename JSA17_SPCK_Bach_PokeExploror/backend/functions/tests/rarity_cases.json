@@ -1,0 +1,18 @@
+{
+  "rarity": [
+    ["Common", "common"], ["Uncommon", "uncommon"], ["Rare", "rare"], ["Rare Holo", "holo-rare"],
+    ["Rare Holo EX", "ultra-rare"], ["Rare Holo GX", "ultra-rare"], ["Rare Holo V", "ultra-rare"],
+    ["Rare Holo VMAX", "ultra-rare"], ["Rare Holo VSTAR", "ultra-rare"], ["Rare Ultra", "ultra-rare"],
+    ["Ultra Rare", "ultra-rare"], ["Double Rare", "rare"], ["ACE SPEC Rare", "ultra-rare"], ["Amazing Rare", "ultra-rare"],
+    ["Radiant Rare", "ultra-rare"], ["Rare Secret", "secret-rare"], ["Rare Rainbow", "secret-rare"],
+    ["Illustration Rare", "secret-rare"], ["Shiny Rare", "secret-rare"],
+    ["Special Illustration Rare", "chase"], ["Hyper Rare", "chase"],
+    ["Promo", "common"], ["", "common"], [null, "common"], ["Totally New Label", "common"], ["rare holo", "holo-rare"]
+  ],
+  "finish": [
+    ["Common", ["normal"], "normal"], ["Rare", ["holofoil"], "holo"], ["Rare", ["reverseHolofoil"], "reverse-holo"],
+    ["Rare Holo", [], "holo"], ["Rare Holo V", ["holofoil"], "full-art"], ["Rare Secret", [], "secret"],
+    ["Illustration Rare", [], "special"], ["Common", ["normal", "reverseHolofoil"], "reverse-holo"],
+    ["Rare", ["1stEditionHolofoil"], "holo"]
+  ]
+}

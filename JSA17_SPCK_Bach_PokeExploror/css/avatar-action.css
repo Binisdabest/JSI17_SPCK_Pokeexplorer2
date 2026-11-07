@@ -1,0 +1,75 @@
+/* ==========================================================
+   avatar-action.css
+   Signed-in nav avatar bubble + dropdown (profile / log out).
+   ========================================================== */
+
+.avatar-action {
+  position: relative;
+  outline: none;
+}
+
+.avatar-action__img {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  background: var(--yellow);
+  cursor: pointer;
+  display: block;
+  transition: transform 0.15s var(--ease-out);
+}
+
+.avatar-action:hover .avatar-action__img {
+  transform: translateY(-2px);
+}
+
+.avatar-action__popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 190px;
+  padding: 6px;
+  border: var(--outline);
+  border-radius: var(--radius-md);
+  background: #fff;
+  box-shadow: var(--lift);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+  z-index: 40;
+}
+
+.avatar-action:hover .avatar-action__popup,
+.avatar-action:focus-within .avatar-action__popup {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.avatar-action__item {
+  display: block;
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.avatar-action__item:hover {
+  background: var(--sky-light);
+}
+
+.avatar-action__item--danger {
+  color: var(--red-dark);
+}

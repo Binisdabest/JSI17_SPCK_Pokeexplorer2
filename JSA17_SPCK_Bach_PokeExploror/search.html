@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg" />
+  <title>Search — Pokémon Explorer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/avatar-action.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <nav class="site-nav glass" id="site-nav">
+    <a href="index.html" class="nav__logo"><span>Poké</span>Explorer</a>
+    <ul class="nav__menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#games">Games</a></li>
+      <li><a href="search.html" class="is-active">Pokédex</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <div class="nav__right">
+      <div class="nav__points" title="Your PokéPoints">
+        <span aria-hidden="true">●</span>
+        <span id="nav-points" class="mono">0</span>
+      </div>
+      <div id="nav-profile" class="nav__profile-slot"></div>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="search-hero container">
+      <h1>Search the Pokédex</h1>
+      <p>Look up any Pokémon by name or number, or filter and sort the whole Pokédex below.</p>
+
+      <div class="search-box">
+        <form class="search-bar glass" id="search-form">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="Try “pika”, “mr mime” or “25”" aria-label="Search Pokémon by name or number" autocomplete="off" spellcheck="false" />
+          <button type="submit" class="btn btn--primary">Scan</button>
+        </form>
+      </div>
+
+      <div class="search-chips">
+        <button type="button" class="chip" data-query="pikachu">Pikachu</button>
+        <button type="button" class="chip" data-query="charizard">Charizard</button>
+        <button type="button" class="chip" data-query="gengar">Gengar</button>
+        <button type="button" class="chip" data-query="lucario">Lucario</button>
+        <button type="button" class="chip" data-query="mewtwo">Mewtwo</button>
+      </div>
+    </section>
+
+    <section class="search-results container" id="search-results" aria-live="polite" hidden></section>
+
+    <section class="dex-explorer container" id="dex-explorer" aria-label="Browse the Pokédex"></section>
+  </main>
+
+  <footer class="footer container">
+    <div class="footer__bottom">
+      <span>© 2026 PokéExplorer — a student project, unaffiliated with Nintendo, Game Freak, or The Pokémon Company.</span>
+      <span>Data via PokéAPI</span>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="js/pages/search.js"></script>
+</body>
+</html>

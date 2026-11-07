@@ -1,0 +1,313 @@
+/* ==========================================
+   POKEEXPLOROR - Pokémon-style theme
+   Palette: red, blue, yellow, dark ink, soft green "screen"
+   ========================================== */
+
+:root {
+    --red: #ee1515;
+    --red-dark: #b30d0d;
+    --blue: #3b4cca;
+    --yellow: #ffcb05;
+    --green: #4cd964;
+    --ink: #222224;
+    --screen: #dff3e4;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- Page background: blue with soft diagonal stripes ---------- */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    font-family: "Fredoka", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+        repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.06) 0 14px,
+            transparent 14px 28px),
+        var(--blue);
+}
+
+/* ---------- Red handheld "device" body ---------- */
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: var(--red);
+    border: 4px solid var(--ink);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow:
+        0 8px 0 var(--red-dark),
+        0 18px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Header ---------- */
+.brand {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.lights {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.light {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+}
+
+.light-blue {
+    background: #6ec6ff;
+}
+
+.light-red {
+    background: #ff6b6b;
+}
+
+.light-yellow {
+    background: var(--yellow);
+}
+
+.light-green {
+    background: var(--green);
+}
+
+h1 {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(1rem, 5vw, 1.35rem);
+    line-height: 1.3;
+    letter-spacing: 1px;
+    color: var(--yellow);
+    text-shadow: 3px 3px 0 var(--blue), 5px 5px 0 var(--ink);
+}
+
+.tagline {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+}
+
+/* ---------- Green "screen" that holds the form ---------- */
+.screen {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: var(--screen);
+    border: 4px solid var(--ink);
+    border-radius: 14px;
+    box-shadow:
+        inset 0 0 0 3px rgba(255, 255, 255, 0.5),
+        inset 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Inputs ---------- */
+input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: 10px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px var(--yellow);
+}
+
+/* Small password rule reminder under the inputs */
+.hint {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    color: rgba(34, 34, 36, 0.75);
+}
+
+/* ---------- Buttons (chunky, press-down effect) ---------- */
+button {
+    padding: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: 0 4px 0 var(--ink);
+    cursor: pointer;
+    transition: transform 0.08s, box-shadow 0.08s, filter 0.15s;
+}
+
+button:hover {
+    filter: brightness(1.07);
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--ink);
+}
+
+/* Sign Up and Log In sit side by side */
+.button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+#signupBtn {
+    background: var(--yellow);
+}
+
+#loginBtn {
+    background: var(--blue);
+    color: var(--white);
+}
+
+#googleBtn {
+    background: var(--white);
+}
+
+#logoutBtn {
+    width: 100%;
+    margin-top: 6px;
+    background: var(--red);
+    color: var(--white);
+}
+
+/* ---------- Success / error message box ----------
+   app.js sets the text and adds the class "success" or "error".
+   When it has no text it is hidden. */
+.message {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    word-break: break-word;
+    border: 3px solid var(--ink);
+    border-radius: 10px;
+}
+
+.message:empty {
+    display: none;
+}
+
+.message.success {
+    background: #c9f5d0;
+}
+
+.message.error {
+    background: #ffd5d5;
+}
+
+/* ---------- Divider ---------- */
+hr {
+    border: none;
+    border-top: 3px dashed rgba(34, 34, 36, 0.35);
+    margin: 4px 0;
+}
+
+/* ---------- User info ("trainer card") ----------
+   Hidden until app.js sets style.display = "block" after login. */
+#userInfo {
+    display: none;
+    padding: 14px;
+    background: var(--white);
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+}
+
+#userInfo h3 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+#userInfo p {
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    word-break: break-all;
+    /* long UIDs / emails must not overflow */
+}
+
+#userInfo span {
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* ---------- Added when linking to the hub ---------- */
+button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.back { display: inline-block; margin-top: 10px; font-size: 0.85rem; color: var(--white); text-decoration: underline; }
+
+/* ---------- Phase 0: form layout, show/hide password, forgot password, busy state ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 12px; }
+
+.password-field { position: relative; }
+.password-field input { padding-right: 76px; }
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-width: 2px;
+    border-radius: 8px;
+    box-shadow: 0 2px 0 var(--ink);
+}
+.password-toggle:active { transform: translateY(calc(-50% + 2px)); box-shadow: 0 0 0 var(--ink); }
+
+/* Looks like a link, not a chunky button */
+.link-btn {
+    align-self: center;
+    padding: 2px 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--blue);
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: none;
+    text-decoration: underline;
+}
+.link-btn:hover { filter: none; color: var(--red-dark); }
+.link-btn:active { transform: none; box-shadow: none; }
+
+button:focus-visible, input:focus-visible, .back:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+/* A button that is waiting for Firebase shows a spinner after its label */
+button[aria-busy="true"]::after {
+    content: "";
+    display: inline-block;
+    width: 0.9em;
+    height: 0.9em;
+    margin-left: 8px;
+    vertical-align: -0.1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: auth-spin 0.7s linear infinite;
+}
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { button[aria-busy="true"]::after { animation-duration: 2s; } }
+
+.message.info { background: #d8f0ff; }

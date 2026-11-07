@@ -1,0 +1,72 @@
+/* ==========================================================
+   animations.css
+   All @keyframes live here, grouped by what uses them.
+   ========================================================== */
+
+/* Scan Lens ring rotation */
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Scan Lens radar sweep, triggered on Pokémon change */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); opacity: 1; }
+  to   { transform: rotate(360deg); opacity: 0; }
+}
+
+/* Loading skeleton shimmer (featured rail while fetching) */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Toast enter/exit */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; }
+  to   { opacity: 0; transform: translateY(-8px); }
+}
+
+/* Confetti burst on Lucky Spin wins */
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* Holographic foil sweep — Pokellector-style card shine on hover */
+@keyframes holoSweep {
+  from { background-position: -150% -150%; }
+  to   { background-position: 150% 150%; }
+}
+
+/* TCG Pocket-style reward reveal: card flips/scales in from a small glint */
+@keyframes rewardReveal {
+  0%   { opacity: 0; transform: scale(0.4) rotateY(90deg); }
+  60%  { opacity: 1; transform: scale(1.05) rotateY(0deg); }
+  100% { transform: scale(1) rotateY(0deg); }
+}
+
+/* Radiant burst rays behind rare+ reward reveals */
+@keyframes burstSpin {
+  from { transform: rotate(0deg); opacity: 0.55; }
+  to   { transform: rotate(360deg); opacity: 0.55; }
+}
+
+@keyframes burstPulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50%      { transform: scale(1.12); opacity: 0.8; }
+}
+
+/* Slow ambient glow pulse for high-rarity card borders */
+@keyframes rarityPulse {
+  0%, 100% { box-shadow: 0 0 0 1px var(--glow-color, var(--violet)), 0 0 18px -4px var(--glow-color, var(--violet)); }
+  50%      { box-shadow: 0 0 0 1px var(--glow-color, var(--violet)), 0 0 30px 2px var(--glow-color, var(--violet)); }
+}

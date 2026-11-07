@@ -1,0 +1,205 @@
+// Publish in Firebase console > Firestore > Rules.
+//
+// scores:     anyone can read; a player can only write their own document, and only raise their best.
+// users:      public profiles; you can only write your own.
+// posts:      public; you create your own and can delete your own. Anyone signed in can change likeCount / commentCount
+//             (likeCount is tied to the like document in the same batch, see likeDelta below).
+// messages:   public chat; you can only post as yourself and delete your own.
+// economy:    cards/ and packs/ are read-only catalogs. users/{uid}/wallet, cardInventory and pointTransactions can be
+//             READ by their owner and are never written by a browser; only the Cloud Functions in /backend (Admin SDK,
+//             which bypasses rules) write them. Set economyTrusted() to true ONLY after those functions are deployed:
+//             it also stops browsers from writing their own `points` on the public profile.
+// Known limit: commentCount can only be fully trusted with a Cloud Function; here it is limited to small steps.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    // false = prototype economy (the browser still mirrors its own PokéPoints onto the profile; not cheat-resistant).
+    // true  = trusted economy (profile.points can only be written by the backend).
+    function economyTrusted() { return false; }
+
+    /* ---------------- economy catalogs (read-only for everyone; seeded with the Admin SDK) ---------------- */
+    match /cards/{cardId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /packs/{packId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    /* ---------------- scores (unchanged) ---------------- */
+    match /scores/{docId} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && docId == request.auth.uid + "_" + request.resource.data.gameId
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'gameId', 'best', 'updatedAt'])
+        && request.resource.data.gameId in ['pokedle', 'higher-lower', 'pixel-guess', 'emoji-riddle', 'memory-cards']
+        && request.resource.data.name is string && request.resource.data.name.size() <= 30
+        && request.resource.data.best is number
+        && request.resource.data.best >= 0 && request.resource.data.best <= 5000
+        && (resource == null || request.resource.data.best >= resource.data.best);
+      allow delete: if false;
+    }
+
+    /* ---------------- trainer profiles ---------------- */
+    function validUser(d) {
+      return d.keys().hasOnly(['uid', 'username', 'usernameLower', 'photoURL', 'photoPath', 'bio', 'favoritePokemon', 'team',
+                               'points', 'collectionCount', 'uniqueCount', 'rarityCounts', 'showcase', 'rareCards', 'createdAt', 'updatedAt'])
+        && d.keys().hasAll(['uid', 'username', 'usernameLower', 'createdAt'])
+        && d.uid == request.auth.uid
+        && d.username is string && d.username.size() >= 2 && d.username.size() <= 24
+        && d.usernameLower == d.username.lower()
+        && (!('bio' in d) || (d.bio is string && d.bio.size() <= 160))
+        && (!('photoURL' in d) || d.photoURL == null
+            || (d.photoURL is string && d.photoURL.size() < 100000 && (d.photoURL[0:8] == 'https://' || d.photoURL[0:11] == 'data:image/')))
+        && (!('photoPath' in d) || d.photoPath == null || (d.photoPath is string && d.photoPath.size() < 200))
+        && (!('points' in d) || (d.points is number && d.points >= 0 && d.points <= 10000000))
+        && (!('collectionCount' in d) || (d.collectionCount is number && d.collectionCount >= 0 && d.collectionCount <= 100000))
+        && (!('uniqueCount' in d) || (d.uniqueCount is number && d.uniqueCount >= 0 && d.uniqueCount <= 2000))
+        && (!('team' in d) || (d.team is list && d.team.size() <= 6))
+        && (!('showcase' in d) || (d.showcase is list && d.showcase.size() <= 12))
+        && (!('rareCards' in d) || (d.rareCards is list && d.rareCards.size() <= 6))
+        && (!('favoritePokemon' in d) || d.favoritePokemon == null || d.favoritePokemon is map);
+    }
+
+    match /users/{uid} {
+      allow read: if true;
+      allow create: if signedIn() && request.auth.uid == uid && validUser(request.resource.data)
+        && request.resource.data.createdAt == request.time
+        && (!economyTrusted() || !('points' in request.resource.data) || request.resource.data.points == 0);
+      allow update: if signedIn() && request.auth.uid == uid && validUser(request.resource.data)
+        && request.resource.data.createdAt == resource.data.createdAt
+        && (!economyTrusted() || request.resource.data.get('points', 0) == resource.data.get('points', 0));
+      allow delete: if false;
+
+      // Economy documents: the owner may read them, nobody may write them from a browser.
+      match /wallet/{docId} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+      match /cardInventory/{cardId} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+      match /pointTransactions/{txId} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow write: if false;
+      }
+
+      // Who I follow (written by me) and who follows me (a mirror, written by the follower).
+      match /following/{target} {
+        allow read: if true;
+        allow create: if signedIn() && request.auth.uid == uid && target != uid
+          && request.resource.data.keys().hasOnly(['uid', 'createdAt']) && request.resource.data.uid == target;
+        allow delete: if signedIn() && request.auth.uid == uid;
+      }
+      match /followers/{follower} {
+        allow read: if true;
+        allow create: if signedIn() && request.auth.uid == follower && follower != uid
+          && request.resource.data.keys().hasOnly(['uid', 'createdAt']) && request.resource.data.uid == follower;
+        allow delete: if signedIn() && request.auth.uid == follower;
+      }
+
+      // Notifications live in the RECEIVER's profile. Only the receiver reads them. The sender can create one
+      // and retract their own (so unliking removes the notification).
+      match /notifications/{nid} {
+        allow read: if signedIn() && request.auth.uid == uid;
+        allow create: if signedIn() && request.auth.uid != uid
+          && request.resource.data.keys().hasOnly(['type', 'fromUid', 'fromName', 'postId', 'snippet', 'read', 'createdAt'])
+          && request.resource.data.keys().hasAll(['type', 'fromUid', 'fromName', 'read', 'createdAt'])
+          && request.resource.data.type in ['like', 'comment', 'reply', 'follow']
+          && request.resource.data.fromUid == request.auth.uid
+          && request.resource.data.fromName is string && request.resource.data.fromName.size() <= 40
+          && request.resource.data.read == false
+          && request.resource.data.createdAt == request.time
+          && (!('snippet' in request.resource.data) || request.resource.data.snippet.size() <= 80);
+        allow update: if signedIn() && request.auth.uid == uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+        allow delete: if signedIn() && (request.auth.uid == uid || resource.data.fromUid == request.auth.uid);
+      }
+    }
+
+    /* ---------------- posts ---------------- */
+    function isPostOwner(postId) {
+      return get(/databases/$(database)/documents/posts/$(postId)).data.authorUid == request.auth.uid;
+    }
+    function validPost(d) {
+      return d.keys().hasOnly(['authorUid', 'authorName', 'text', 'type', 'imageURL', 'imagePath', 'video', 'attachment',
+                               'likeCount', 'commentCount', 'createdAt'])
+        && d.keys().hasAll(['authorUid', 'authorName', 'text', 'type', 'likeCount', 'commentCount', 'createdAt'])
+        && d.authorUid == request.auth.uid
+        && d.authorName is string && d.authorName.size() >= 1 && d.authorName.size() <= 40
+        && d.text is string && d.text.size() <= 500
+        && d.type in ['text', 'image', 'video', 'pack', 'card', 'team', 'badge']
+        && (d.type != 'text' || d.text.size() >= 1)
+        && d.likeCount == 0 && d.commentCount == 0
+        && d.createdAt == request.time
+        && (!('imageURL' in d) || (d.imageURL is string && d.imageURL.size() < 800000
+            && (d.imageURL[0:8] == 'https://' || d.imageURL[0:11] == 'data:image/')))
+        && (!('imagePath' in d) || (d.imagePath is string && d.imagePath.size() < 200))
+        && (!('video' in d) || (d.video is map && d.video.provider in ['youtube', 'vimeo']
+            && d.video.id is string && d.video.id.size() <= 16))
+        && (!('attachment' in d) || (d.attachment is map && d.attachment.size() <= 6));
+    }
+    function likePath(postId) {
+      return /databases/$(database)/documents/posts/$(postId)/likes/$(request.auth.uid);
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if signedIn() && validPost(request.resource.data);
+      allow delete: if signedIn() && resource.data.authorUid == request.auth.uid;
+
+      // likeCount may only move by the change of YOUR like document in the same batch (+1 when created, -1 when deleted).
+      allow update: if signedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likeCount'])
+        && request.resource.data.likeCount >= 0
+        && request.resource.data.likeCount ==
+           resource.data.likeCount + (existsAfter(likePath(postId)) ? 1 : 0) - (exists(likePath(postId)) ? 1 : 0);
+
+      // commentCount: one new comment adds 1; deleting a comment (and its replies) subtracts a few.
+      allow update: if signedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentCount'])
+        && request.resource.data.commentCount >= 0
+        && request.resource.data.commentCount - resource.data.commentCount <= 1
+        && request.resource.data.commentCount - resource.data.commentCount >= -100;
+
+      match /likes/{uid} {
+        allow read: if true;
+        allow create: if signedIn() && request.auth.uid == uid
+          && request.resource.data.keys().hasOnly(['uid', 'createdAt']) && request.resource.data.uid == uid;
+        allow delete: if signedIn() && (request.auth.uid == uid || isPostOwner(postId));
+      }
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if signedIn()
+          && request.resource.data.keys().hasOnly(['authorUid', 'authorName', 'text', 'parentId', 'createdAt'])
+          && request.resource.data.authorUid == request.auth.uid
+          && request.resource.data.authorName is string && request.resource.data.authorName.size() <= 40
+          && request.resource.data.text is string && request.resource.data.text.size() >= 1 && request.resource.data.text.size() <= 300
+          && (request.resource.data.parentId == null || request.resource.data.parentId is string)
+          && request.resource.data.createdAt == request.time;
+        allow delete: if signedIn() && (resource.data.authorUid == request.auth.uid || isPostOwner(postId));
+      }
+    }
+
+    /* ---------------- chat ---------------- */
+    function validRoom(r) { return r in ['lounge', 'pulls', 'teams', 'games', 'dex']; }
+
+    match /messages/{messageId} {
+      allow read: if true;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['roomId', 'authorUid', 'authorName', 'text', 'createdAt'])
+        && validRoom(request.resource.data.roomId)
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.authorName is string && request.resource.data.authorName.size() <= 40
+        && request.resource.data.text is string && request.resource.data.text.size() >= 1 && request.resource.data.text.size() <= 400
+        && request.resource.data.createdAt == request.time;
+      allow update: if false;
+      allow delete: if signedIn() && resource.data.authorUid == request.auth.uid;
+    }
+  }
+}

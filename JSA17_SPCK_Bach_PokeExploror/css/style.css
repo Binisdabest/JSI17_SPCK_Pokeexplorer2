@@ -1,0 +1,237 @@
+/* ==========================================================
+   style.css
+   Design tokens + reset + base typography.
+   Every page loads this FIRST, before components.css.
+
+   Look: a bright Pokémon sky. Sky-blue page, white "sticker"
+   panels with thick navy outlines, Poké Ball red and Pikachu
+   yellow for actions. Navy replaces black everywhere.
+   ========================================================== */
+
+:root {
+  /* Core palette */
+  --sky: #8fd3ff;
+  --sky-light: #d8f0ff;
+  --cloud: #ffffff;
+  --ink: #1b2a5e;          /* navy: text and every outline */
+  --ink-soft: #4a5a8c;     /* secondary text */
+  --red: #e3121b;          /* Poké Ball red: main actions */
+  --red-dark: #b30d0d;
+  --yellow: #ffcb05;       /* Pikachu yellow: highlights, points */
+  --blue: #3b4cca;         /* Pokémon blue: links, footer */
+  --grass: #4cc764;
+
+  /* Outline + shadow recipe used by every "sticker" */
+  --outline: 3px solid var(--ink);
+  --lift: 0 5px 0 var(--ink);
+  --lift-hover: 0 9px 0 var(--ink);
+
+  /* Stat colors: each stat keeps its own identity */
+  --stat-hp: #ff6b6b;
+  --stat-attack: #ffa168;
+  --stat-defense: #ffd23f;
+  --stat-special-attack: #6fb1fc;
+  --stat-special-defense: #7ac74c;
+  --stat-speed: #ff6bcb;
+
+  /* Rarity ramp (collection, cards, rewards) */
+  --rarity-common: #7c88a8;
+  --rarity-uncommon: #3fa34d;
+  --rarity-rare: #3b6fe0;
+  --rarity-ultra-rare: #7a49e0;
+  --rarity-legendary: #c98f00;
+  --rarity-mythical: #d6203a;
+
+  /* Type */
+  --font-display: "Fredoka", "Trebuchet MS", sans-serif;
+  --font-body: "Nunito", system-ui, sans-serif;
+  --font-pixel: "Press Start 2P", monospace;
+  --font-mono: "Nunito", system-ui, sans-serif;
+
+  /* Layout */
+  --container-width: 1160px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --nav-height: 76px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Older pages still read these names; they now point at the light theme. */
+  --void: var(--sky-light);
+  --panel: var(--cloud);
+  --panel-light: #eaf6ff;
+  --border: rgba(27, 42, 94, 0.16);
+  --scarlet: var(--red);
+  --violet: var(--blue);
+  --volt: var(--yellow);
+  --mist: var(--ink);
+  --mist-dim: var(--ink-soft);
+  --gradient-brand: linear-gradient(135deg, var(--red), #ff5a3c);
+}
+
+/* ---------------------------------------------------------- */
+/* Reset                                                       */
+/* ---------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: #f3faff;
+  background-image: linear-gradient(180deg, #86cfff 0, #bde6ff 380px, #e4f5ff 760px, #f3faff 1000px);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+img {
+  max-width: 100%;
+  height: auto;          /* beats width/height attributes, so images keep their shape */
+  object-fit: contain;   /* safety net: a forced box never distorts a picture */
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------------------------------------------------------- */
+/* Typography                                                  */
+/* ---------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(2.3rem, 5.2vw, 4rem); font-weight: 700; }
+h2 { font-size: clamp(1.9rem, 3.4vw, 2.6rem); font-weight: 700; }
+h3 { font-size: 1.3rem; }
+
+p {
+  color: var(--ink-soft);
+}
+
+.mono {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+/* Sticker headline: white letters, navy outline, hard shadow. */
+.sticker-title {
+  color: #fff;
+  -webkit-text-stroke: 9px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 0 6px 0 var(--ink);
+  letter-spacing: 0.01em;
+  line-height: 1.04;
+}
+
+/* Small pill label (used on older pages) */
+.eyebrow {
+  display: inline-block;
+  padding: 4px 14px;
+  margin-bottom: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------------- */
+/* Layout utilities                                             */
+/* ---------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.section {
+  padding-block: 72px;
+}
+
+/* White sticker panel. Name kept from the old theme so existing markup works. */
+.glass {
+  background: var(--cloud);
+  border: var(--outline);
+  box-shadow: var(--lift);
+}
+
+.empty-state {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  padding: 32px;
+  text-align: center;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------- */
+/* Scroll reveal (older pages)                                  */
+/* ---------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------- */
+/* Focus states                                                 */
+/* ---------------------------------------------------------- */
+:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}

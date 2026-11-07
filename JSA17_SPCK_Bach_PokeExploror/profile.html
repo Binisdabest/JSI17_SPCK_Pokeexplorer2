@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg" />
+  <title>Profile | PokéExplorer</title>
+  <meta name="description" content="Quick Pokémon mini games. Play instantly, log in to save your scores." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/avatar-action.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/hub.css" />
+  <link rel="stylesheet" href="css/boards.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="site-nav glass" id="site-nav">
+    <a href="index.html" class="nav__logo">
+      <span>Poké</span>Explorer
+    </a>
+
+    <ul class="nav__menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#games">Games</a></li>
+      <li><a href="search.html">Pokédex</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="profile.html" class="is-active">Profile</a></li>
+    </ul>
+
+    <div class="nav__right">
+      <div id="nav-profile" class="nav__profile-slot"></div>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="container board-page">
+      <h1>Profile</h1>
+      <div id="profile-root" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo"><span>Poké</span>Explorer</a>
+        <p>Quick Pokémon mini games and a Pokédex, built on the PokéAPI.</p>
+      </div>
+
+      <div class="footer__col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html#games">Games</a></li>
+          <li><a href="search.html">Pokédex</a></li>
+          <li><a href="leaderboard.html">Leaderboard</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>More</h4>
+        <ul>
+          <li><a href="conditions.html">Condition Guide</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 PokéExplorer — a student project, unaffiliated with Nintendo, Game Freak, or The Pokémon Company.</span>
+      <span>Data via PokéAPI</span>
+    </div>
+  </footer>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="js/pages/profile.js"></script>
+</body>
+</html>

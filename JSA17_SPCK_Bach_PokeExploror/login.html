@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in | PokéExplorer</title>
+
+    <!-- Fonts: "Press Start 2P" for the title, "Fredoka" for everything else -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+
+    <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <main class="container">
+
+        <!-- REQUIREMENT 1: register / login page built with HTML + CSS -->
+        <header class="brand">
+            <div class="lights" aria-hidden="true">
+                <span class="light light-blue"></span>
+                <span class="light light-red"></span>
+                <span class="light light-yellow"></span>
+                <span class="light light-green"></span>
+            </div>
+            <h1>POKÉEXPLORER</h1>
+            <p class="tagline">Trainer Login</p>
+            <a class="back" href="index.html">Back to games</a>
+        </header>
+
+        <!-- DO NOT change the ids below (email, password, signupBtn, loginBtn,
+             message, googleBtn, userInfo, userEmail, userUID, userProvider, logoutBtn):
+             login.js looks elements up by these ids. New ids: loginForm, togglePassword, forgotBtn. -->
+        <section class="screen">
+
+            <!-- A real <form> so Enter submits "Log In". Sign Up is type="button" and never submits. -->
+            <form id="loginForm" class="auth-form" novalidate>
+                <input type="email" id="email" placeholder="Email" aria-label="Email" autocomplete="email"
+                    autocapitalize="none" spellcheck="false">
+
+                <div class="password-field">
+                    <input type="password" id="password" placeholder="Password" aria-label="Password"
+                        autocomplete="current-password">
+                    <button type="button" id="togglePassword" class="password-toggle" aria-label="Show password"
+                        aria-controls="password" aria-pressed="false">Show</button>
+                </div>
+
+                <p class="hint">Sign up password: at least 6 characters, with an uppercase letter, a lowercase letter
+                    and a number.</p>
+
+                <div class="button-row">
+                    <button type="button" id="signupBtn">Sign Up</button>
+                    <button type="submit" id="loginBtn">Log In</button>
+                </div>
+
+                <button type="button" id="forgotBtn" class="link-btn">Forgot password?</button>
+            </form>
+
+            <!-- REQUIREMENT 4: success / error messages appear here.
+                 Empty = hidden (see style.css). -->
+            <p id="message" class="message" role="status" aria-live="polite"></p>
+
+            <hr>
+
+            <!-- REQUIREMENT 6 (Advance): Google login -->
+            <button id="googleBtn">Log In With Google</button>
+
+            <!-- REQUIREMENT 5 (Bonus): shows the user's email after a successful login.
+                 Hidden by default (see style.css); app.js shows it. -->
+            <div id="userInfo">
+                <h3>Trainer Card</h3>
+
+                <p>Email: <span id="userEmail"></span></p>
+                <p>UID: <span id="userUID"></span></p>
+                <p>Provider: <span id="userProvider"></span></p>
+
+                <button id="logoutBtn">Log Out</button>
+            </div>
+
+        </section>
+    </main>
+
+    <script type="module" src="js/pages/login.js"></script>
+</body>
+
+</html>

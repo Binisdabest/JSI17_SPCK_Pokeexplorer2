@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Logo concept C: tall grass at sunrise</title>
+  <!-- Wild-encounter grass under a rising sun. Pairs with the name "Tallgrass". -->
+  <defs><clipPath id="c"><circle cx="32" cy="32" r="29"/></clipPath></defs>
+  <g clip-path="url(#c)">
+    <rect width="64" height="64" fill="#8fd3ff"/>
+    <circle cx="32" cy="30" r="11" fill="#ffcb05" stroke="#1b2a5e" stroke-width="3"/>
+    <path d="M0 64V52L5 44 10 53 16 40 22 53 28 45 33 54 39 38 45 53 51 43 56 53 60 45 64 52V64Z" fill="#4cc764" stroke="#1b2a5e" stroke-width="3" stroke-linejoin="round"/>
+  </g>
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#1b2a5e" stroke-width="4"/>
+</svg>

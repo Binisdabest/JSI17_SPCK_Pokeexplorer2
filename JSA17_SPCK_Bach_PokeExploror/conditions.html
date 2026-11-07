@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg" />
+  <title>Condition Guide — Pokémon Explorer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/avatar-action.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <nav class="site-nav glass" id="site-nav">
+    <a href="index.html" class="nav__logo"><span>Poké</span>Explorer</a>
+    <ul class="nav__menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#games">Games</a></li>
+      <li><a href="search.html">Pokédex</a></li>
+      <li><a href="leaderboard.html">Leaderboard</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <div class="nav__right">
+      <div class="nav__points" title="Your PokéPoints">
+        <span aria-hidden="true">●</span>
+        <span id="nav-points" class="mono">0</span>
+      </div>
+      <div id="nav-profile" class="nav__profile-slot"></div>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top: calc(var(--nav-height) + 56px); padding-bottom: 100px;">
+    <span class="eyebrow">Reference</span>
+    <h1 class="sticker-title" style="margin-bottom:12px;">Card Condition Guide</h1>
+    <p style="max-width:60ch; margin-bottom:48px;">A card's grade is the single biggest factor in what it's worth. The quality bar below is a simplified stand-in for the corner/edge/surface wear graders actually look at.</p>
+
+    <div class="condition-grid">
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #FFD23F 55%, #fff);">GEM MINT · GM10</span>
+        <h3>Gem Mint</h3>
+        <p>Flawless under magnification — perfect centering, sharp corners, no surface wear at all. The rarest grade to achieve.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:100%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>+30–60%</strong> over Near Mint</p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #7AC74C 55%, #fff);">MINT · M9</span>
+        <h3>Mint</h3>
+        <p>Nearly perfect — maybe one minor, hard-to-see flaw like a tiny print imperfection. Corners and edges still sharp.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:92%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>+10–20%</strong> over Near Mint</p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #6390F0 55%, #fff);">NEAR MINT · NM</span>
+        <h3>Near Mint</h3>
+        <p>The market baseline. Very light handling wear at most — barely noticeable without close inspection. Most "market price" quotes assume this grade.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:80%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>baseline (100%)</strong></p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #8B5CF6 55%, #fff);">LIGHTLY PLAYED · LP</span>
+        <h3>Lightly Played</h3>
+        <p>Minor edge wear or light scratching visible on close look. Still displays well, still fully playable.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:62%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>−15–25%</strong> vs Near Mint</p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #E68A94 55%, #fff);">MODERATELY PLAYED · MP</span>
+        <h3>Moderately Played</h3>
+        <p>Noticeable whitening on edges/corners, visible scratches or scuffing on the surface. Clearly a "played" card.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:42%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>−35–45%</strong> vs Near Mint</p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #E63950 55%, #fff);">HEAVILY PLAYED · HP</span>
+        <h3>Heavily Played</h3>
+        <p>Significant wear throughout — creasing, heavy edge whitening, surface scratching. Structurally intact but rough.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:24%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>−55–65%</strong> vs Near Mint</p>
+      </article>
+
+      <article class="condition-card">
+        <span class="condition-card__badge" style="background:color-mix(in srgb, #7c88a8 55%, #fff);">DAMAGED · DMG</span>
+        <h3>Damaged</h3>
+        <p>Tears, water damage, heavy creasing, writing, or missing pieces. Collector or playset value only.</p>
+        <div style="height:6px; border-radius:999px; background:var(--panel-light); overflow:hidden; margin-bottom:12px;"><div style="width:8%; height:100%; background:var(--gradient-brand);"></div></div>
+        <p class="condition-card__value">Typical value: <strong>−75%+</strong> vs Near Mint</p>
+      </article>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="js/pages/static.js"></script>
+</body>
+</html>

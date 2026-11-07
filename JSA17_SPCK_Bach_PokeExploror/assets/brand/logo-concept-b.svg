@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Logo concept B: a Pokédex lens</title>
+  <!-- Magnifying lens over a tiny pixel sprite: "explore the Dex". Pairs with the name "Dexplorer". -->
+  <path d="M43 43 56 56" stroke="#1b2a5e" stroke-width="9" stroke-linecap="round"/>
+  <path d="M43 43 56 56" stroke="#ffcb05" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="27" cy="27" r="21" fill="#d8f0ff" stroke="#1b2a5e" stroke-width="4"/>
+  <g stroke="#1b2a5e" stroke-width="1.5" stroke-linejoin="round">
+    <rect x="17" y="17" width="8" height="8" fill="#e3121b"/>
+    <rect x="25" y="17" width="8" height="8" fill="#e3121b"/>
+    <rect x="17" y="25" width="8" height="8" fill="#fff"/>
+    <rect x="25" y="25" width="8" height="8" fill="#ffcb05"/>
+    <rect x="33" y="25" width="8" height="8" fill="#fff"/>
+    <rect x="21" y="33" width="8" height="8" fill="#fff"/>
+    <rect x="29" y="33" width="8" height="8" fill="#e3121b"/>
+  </g>
+  <path d="M13 21a15 15 0 0 1 8-9" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>

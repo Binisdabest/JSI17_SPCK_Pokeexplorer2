@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/logo.svg" />
+  <title>Lucky Spin — Pokémon Explorer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/avatar-action.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/community.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <nav class="site-nav glass" id="site-nav">
+    <a href="index.html" class="nav__logo"><span>Poké</span>Explorer</a>
+    <ul class="nav__menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="search.html">Search</a></li>
+      <li><a href="games.html" class="is-active">Games</a></li>
+      <li><a href="collection.html">Collection</a></li>
+      <li><a href="cards.html">Cards</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav__right">
+      <div class="nav__points" title="Your PokéPoints">
+        <span aria-hidden="true">●</span>
+        <span id="nav-points" class="mono">0</span>
+      </div>
+      <div id="nav-profile" class="nav__profile-slot"></div>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top: calc(var(--nav-height) + 56px); padding-bottom: 100px;">
+    <div style="text-align:center;">
+      <span class="eyebrow" style="justify-content:center;">Play &amp; Earn</span>
+      <h1 style="margin-bottom: 24px;">Lucky Spin</h1>
+    </div>
+
+    <div class="trainer-strip glass" id="trainer-strip" hidden></div>
+
+    <!-- ============ LUCKY SPIN ============ -->
+    <section class="game-panel is-active" id="panel-spin">
+      <div class="spin-panel glass">
+        <div class="spin-orb" id="spin-orb">
+          <svg class="spin-orb__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M2 12h6" /><path d="M16 12h6" />
+            <circle cx="12" cy="12" r="2.5" />
+          </svg>
+        </div>
+
+        <p class="spin-cost">Costs <strong id="spin-cost-value">500</strong> PokéPoints per spin</p>
+        <button class="btn btn--primary" id="spin-button">Spin</button>
+
+        <div class="spin-reward" id="spin-reward" style="display:none;"></div>
+      </div>
+      <p style="text-align:center; margin-top:28px;">Looking for the compare game? It is now <a href="game.html?id=higher-lower" style="color:var(--violet);">Higher-Lower</a>.</p>
+    </section>
+  </main>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="js/legacy/spin.js"></script>
+</body>
+</html>

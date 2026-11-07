@@ -1,0 +1,21 @@
+// Publish in Firebase console > Storage > Rules. (Cloud Storage for Firebase needs the Blaze plan since Feb 2026.)
+// Images are public to read; you can only write inside your own folder, and only small JPEG/PNG/WebP files.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /posts/{uid}/{file} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+    match /avatars/{uid}/{file} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 1024 * 1024
+        && request.resource.contentType.matches('image/(jpeg|png|webp)');
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
